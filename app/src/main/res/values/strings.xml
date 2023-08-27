@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">ToDoCopy</string>
+    <string name="todo">TODO</string>
+    <string name="todo1" />
+    <string-array name="ALL">
+        <item>Item 1A</item>
+        <item>Item 1B</item>
+    </string-array>
+
+    <string-array name="ACTIVE">
+        <item>Item 2A</item>
+    </string-array>
+    <string-array name="COMPLETED">
+        <item>Item 3A</item>
+    </string-array>
+</resources>
