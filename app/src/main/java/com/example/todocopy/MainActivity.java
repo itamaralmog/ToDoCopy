@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -43,14 +44,14 @@ public class MainActivity extends AppCompatActivity {
 //        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbarfor);
         setSupportActionBar(toolbar);
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+//        fab.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
 //                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
 //                        .setAction("Action", null).show();
-                openTextDialog(/*builder,input*/);
-            }
-        });
+//                openTextDialog(/*builder,input*/);
+//            }
+//        });
         tabLayout = (TabLayout) findViewById(R.id.tabs);
         viewPager = (ViewPager) findViewById(R.id.viewPager);
         viewPager.setAdapter(viewPagerAdapter);
@@ -133,9 +134,9 @@ public class MainActivity extends AppCompatActivity {
                 // Set Fragmentclass Arguments
 //                FragmentAll fragobj = new FragmentAll();
 //                fragobj.setArguments(bundle);
-                mFragment.setArguments(bundle);
-                mFragmentTransaction.add(R.id.recycler_view,mFragment);
-                mFragmentTransaction.commit();
+//                mFragment.setArguments(bundle);
+//                mFragmentTransaction.add(R.id.recycler_view,mFragment);
+//                mFragmentTransaction.commit();
 
 
             }
@@ -154,5 +155,80 @@ public class MainActivity extends AppCompatActivity {
         super.onStart();
         Log.d("lifecycle","onStart invoked");
     }
-    @Override
+
+    public void openTextDialog(View view) {
+        final Intent intent = new Intent(this,FragmentAll.class);
+        String v = view.toString();
+        Log.d("view*****",v);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        final ScrollView myScroll = new ScrollView(this);
+        final LinearLayout inputs = new LinearLayout(this);
+        inputs.setOrientation(LinearLayout.VERTICAL);
+        inputs.setHorizontalGravity(RelativeLayout.CENTER_VERTICAL);
+        final EditText input = new EditText(this);
+        final EditText input1 = new EditText(this);
+        final DatePicker input2 = new DatePicker(this);
+        final TimePicker input3 = new TimePicker(this);
+        input.setText("Task title");
+        input1.setText("Description");
+        inputs.addView(input);
+        inputs.addView(input1);
+        inputs.addView(input2);
+        inputs.addView(input3);
+        myScroll.addView(inputs);
+        builder.setView(myScroll);
+        builder.setTitle("Add task");
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            String m_Text ="Itamar Almog";
+            String m1_text = " ";
+            String m2_text = " ";
+            String m3_text = " ";
+            int y,m,d;
+            int hour,minutes;
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                m_Text = input.getText().toString();
+                m1_text = input1.getText().toString();
+
+                m = input2.getMonth();
+                d = input2.getDayOfMonth();
+                y = input2.getYear();
+                m+=1;
+
+                m2_text = d+ "." + m + "." +y;
+
+                hour = input3.getHour();
+                minutes  = input3.getMinute();
+
+                m3_text = hour + ":" + minutes;
+
+                Log.d("*****INPUT*****","Task Title:"+ m_Text+ " " + m1_text + " " +m2_text + " " + m3_text);
+                TaskData taskData = new TaskData();
+                taskData.setTaskTitle(m_Text);
+                taskData.setTaskDes(m1_text);
+                taskData.setYear(y);
+                taskData.setMonth(m);
+                taskData.setDay(d);
+                taskData.setHour(hour);
+                taskData.setMinutes(minutes);
+                taskData.setActive(true);
+                String s = taskData.toString();
+                Bundle bundle = new Bundle();
+//                bundle.putString("message", s);
+                bundle.putString("massageObj",s);
+//                Intent intent = new Intent(this, FragmentAll.class);
+                intent.putExtra("DataOfTask",s);
+                startActivity(intent);
+            }
+        });
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+
+        builder.show();
+    }
 }

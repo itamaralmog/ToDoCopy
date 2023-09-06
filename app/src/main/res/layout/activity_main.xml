@@ -41,6 +41,7 @@
         android:layout_gravity="bottom|end"
         android:layout_margin="16dp"
         android:src="@android:drawable/ic_dialog_email"
+        android:onClick="openTextDialog"
         android:contentDescription="@string/todo" />
 
 

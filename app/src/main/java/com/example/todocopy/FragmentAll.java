@@ -12,7 +12,10 @@ package com.example.todocopy;
 //import android.view.ViewGroup;
 //import android.widget.ListView;
 
+import static android.content.Intent.*;
+
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,43 +38,23 @@ public class FragmentAll extends Fragment {
     public FragmentAll(){
 
     }
-
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        Bundle dataOfTask = getActivity().getIntent().getExtras();
+        String dataInTask ="";
+        if (dataOfTask != null) {
+            dataInTask = dataOfTask.getString("DataOfTask");
+        }
+        Log.d("$$$$$",dataInTask);
+    }
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment, container, false);
-//        recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view);
-//        Bundle bundle = getArguments();
-//        String message = "workpeace";
-//        if (bundle != null) {
-//            message = bundle.getString("massageObj");
-//        }
-//        Vector<String> vec = new Vector<String>();
-//        vec.add(message);
-//        if(this.adapter.vec != null) {
-//            for (int i = 0; i < this.adapter.vec.size(); ++i) {
-//                vec.add(this.adapter.vec.get(i));
-//            }
-//        }
-//        this.adapter.vec = vec;
-//        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
-//        recyclerView.setLayoutManager(layoutManager);
-//        recyclerView.setAdapter(adapter);
         return rootView;
 
-//        // Finds the TextView in the custom fragment
-//        myTextView = (TextView)view.findViewById(
-//                R.id.fragmentTextView);
-//
-//        // Gets the data from the passed bundle
-//        Bundle bundle = getArguments();
-//        String message = bundle.getString("mText");
-//
-//        // Sets the derived data (type String) in the
-//        // TextView
-//        myTextView.setText(message);
-//
-//        return view;
+
 
 
 
